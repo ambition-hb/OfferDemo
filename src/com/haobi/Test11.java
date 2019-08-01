@@ -8,12 +8,13 @@ package com.haobi;
  * (而有符号右移则不同，无论参与运算的数字为正数或负数,在执行运算时,都会在高位补0)
  */
 public class Test11 {
+	//通过率44.44%
 	public int NumberOf1(int n) {
 		int count = 0;
 		if(n<0) {
 			//如果是负数,则用补码表示它(计算机中负数是以其补码形式存在的)→原码逐位取反再加1
 			n = Math.abs(n);
-			System.out.println("对于的正数为:"+n);//对负数求绝对值，则其最高位变为0,其余不变
+			System.out.println("对应的正数为:"+n);//对负数求绝对值，则其最高位变为0,其余不变
 			//统计负数绝对值中1的个数
 			while(n > 0) {
 				if(((n-1)&1)==1) {//只有最后一位为1时,和1进行"&"运算的结果才为1
@@ -32,9 +33,13 @@ public class Test11 {
 			return count;		
 		}
 	}
+	//通过率44.44%
+	//分析问题:只考虑了大于0的情况
 	public int NumberOf2(int n) {
+		//计数
 		int count = 0;
 		while(n>0) {
+			//判断最后一位是否为1
 			if(n!=0) {
 				n = n&(n-1);
 				count++;
@@ -42,7 +47,43 @@ public class Test11 {
 		}
 		return count;
 	}
+	
+	//改进1
+	//通过率100%
+	public int NumberOf3(int n) {
+		//计数
+		int count = 0;
+		//判断大于0的情况
+		while(n>0) {
+			//判断最后一位是否为1
+			if(n!=0) {
+				n = n&(n-1);
+				count++;
+			}
+		}
+		//判断小于0的情况
+		while(n<0) {
+			//判断最后一位是否为1
+			if(n!=0) {
+				n = n&(n-1);
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	//改进2
+	//通过率100%
+	public int NumberOf4(int n) {
+		int count = 0;
+		while(n != 0) {
+			++count;
+			n = n&(n-1);
+		}
+		return count;
+	}
+	
 	public static void main(String[] args) {
-		System.out.println("二进制中1的个数:"+new Test11().NumberOf2(-1));
+		System.out.println("二进制中1的个数:"+new Test11().NumberOf3(-1));
 	}
 }
