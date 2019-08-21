@@ -1,4 +1,4 @@
-package com.haobi;
+ package com.haobi;
 
 import java.util.Scanner;
 
